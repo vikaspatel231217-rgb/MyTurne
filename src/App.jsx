@@ -238,6 +238,7 @@ export default function SmartQueueSystem() {
         <AdminShell auth={auth} onLogout={handleLogout} hospitals={hospitals} addHospital={addHospital} removeHospital={removeHospital} addDoctor={addDoctor} removeDoctor={removeDoctor} patchDoctor={patchDoctor} />
       )}
       <ToastStack toasts={toasts} />
+      <Footer />
     </div>
   );
 }
@@ -285,7 +286,7 @@ function LoginScreen({ hospitals, onLogin }) {
       onLogin({
         role,
         name: role === "admin" ? "Admin — Priya Nair" : role === "doctor" ? doc?.name || "Dr. Guest" : "Ananya Verma",
-        email: role === "admin" ? "priya.nair@queueline.io" : role === "doctor" ? "doctor@queueline.io" : "ananya.verma@gmail.com",
+        email: role === "admin" ? "priya.nair@myturn.io" : role === "doctor" ? "doctor@myturn.io" : "ananya.verma@gmail.com",
         hospitalId: role === "doctor" ? hospitalId : undefined,
         doctorId: role === "doctor" ? doctorId : undefined,
         via: "google",
@@ -298,7 +299,7 @@ function LoginScreen({ hospitals, onLogin }) {
       <div style={styles.loginCard}>
         <div style={styles.loginBrandRow}>
           <div style={styles.brandMark}><RadioTower size={20} color={COLORS.amber} strokeWidth={2.2} /></div>
-          <div><div style={styles.brandName}>QueueLine · Hospitals</div><div style={styles.brandSub}>digital OPD tokens · live wait times</div></div>
+          <div><div style={styles.brandName}>MyTurn · Hospitals</div><div style={styles.brandSub}>digital OPD tokens · live wait times</div></div>
         </div>
 
         <div style={styles.roleTabs}>
@@ -389,7 +390,7 @@ function UserShell({ auth, onLogout, hospitals, myTokens, takeToken, dropToken }
 
   return (
     <div>
-      <TopBar title="QueueLine" subtitle="find a hospital · book a doctor" auth={auth} onLogout={onLogout} />
+      <TopBar title="MyTurn" subtitle="find a hospital · book a doctor" auth={auth} onLogout={onLogout} />
       <main style={styles.main}>
         <div style={styles.grid2}>
           <div style={styles.panel}>
@@ -570,7 +571,7 @@ function AdminShell({ auth, onLogout, hospitals, addHospital, removeHospital, ad
   ];
   return (
     <div>
-      <TopBar title="QueueLine" subtitle="admin · hospital network" auth={auth} onLogout={onLogout} />
+      <TopBar title="MyTurn" subtitle="admin · hospital network" auth={auth} onLogout={onLogout} />
       <nav style={styles.navRow2}>
         {tabs.map(({ id, label, icon: Icon }) => <button key={id} onClick={() => setTab(id)} style={styles.navBtn(tab === id)}><Icon size={15} />{label}</button>)}
       </nav>
@@ -712,6 +713,24 @@ function EmptyState({ icon: Icon, text }) { return <div style={styles.emptyState
 function ToastStack({ toasts }) {
   return <div style={styles.toastStack}>{toasts.map((t) => <div key={t.id} style={styles.toast(t.kind)}><Bell size={14} style={{ flexShrink: 0, marginTop: 1 }} /><span>{t.text}</span></div>)}</div>;
 }
+function Footer() {
+  return (
+    <footer style={styles.footer}>
+      <div style={styles.footerInner}>
+        <div style={styles.footerTitle}>© 2026 CodeMatrix | All Rights Reserved.</div>
+        <div style={styles.footerSub}>Designed and Developed by Team CodeMatrix.</div>
+        <div style={styles.footerNote}>
+          All content, design, and intellectual property on this website are owned by Team CodeMatrix.
+          Unauthorized reproduction or distribution is prohibited.
+        </div>
+        <div style={styles.footerContactHeading}>Contact Us:</div>
+        <div style={styles.footerContactRow}>📧 Email: 26btcse012@shiats.edu.in</div>
+        <div style={styles.footerContactRow}>📞 Phone: +91 9559425231, +91 9555628342, +91 8081332265</div>
+        <div style={styles.footerContactRow}>📍 Location: Department of CSIT, Sam Higginbottom University of Agriculture Technology and Sciences - 211007, Uttar Pradesh, India</div>
+      </div>
+    </footer>
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Design tokens
@@ -796,4 +815,11 @@ const styles = {
   directoryDocRow: { display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, padding: "6px 4px" },
   toastStack: { position: "fixed", bottom: 18, right: 18, display: "flex", flexDirection: "column", gap: 8, zIndex: 20, maxWidth: 320 },
   toast: (kind) => ({ display: "flex", gap: 8, alignItems: "flex-start", fontSize: 12.5, padding: "10px 12px", borderRadius: 8, background: COLORS.panelAlt, border: `1px solid ${kind === "urgent" ? COLORS.green : kind === "warn" ? COLORS.amber : COLORS.gridLine}`, color: COLORS.text, boxShadow: "0 6px 18px rgba(0,0,0,0.35)" }),
+  footer: { borderTop: `1px solid ${COLORS.gridLine}`, marginTop: 32, padding: "22px 20px 26px", background: COLORS.panel },
+  footerInner: { maxWidth: 980, margin: "0 auto", textAlign: "center" },
+  footerTitle: { fontSize: 13, fontWeight: 700, color: COLORS.text, marginBottom: 4 },
+  footerSub: { fontSize: 12, color: COLORS.textMuted, marginBottom: 10 },
+  footerNote: { fontSize: 11, color: COLORS.textMuted, lineHeight: 1.6, maxWidth: 640, margin: "0 auto 14px" },
+  footerContactHeading: { fontSize: 12, fontWeight: 600, color: COLORS.text, marginBottom: 6 },
+  footerContactRow: { fontSize: 11.5, color: COLORS.textMuted, lineHeight: 1.7 },
 };
